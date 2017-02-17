@@ -13,7 +13,7 @@
             <div class="navbar">
                 <div class="navbar-inner">
                     {menubar} 
-				</div>
+		</div>
             </div>           
             <div id="content">
                 <h1>{pagetitle}</h1>
