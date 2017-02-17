@@ -19,8 +19,22 @@ class Welcome extends Application
 	 */
 	public function index()
 	{
-		$this->data['pagebody'] = 'homepage';
-		$this->render(); 
+            $this->data['pagebody'] = 'homepage';
+
+            $tasks = $this->tasks->all();
+
+            $count = 0;
+            foreach($tasks as $task)
+            {
+                if ($task->status != 2)
+                {
+                    $count++;
+                }
+            }
+
+            $this->data['remaining_tasks'] = $count;
+
+            $this->render();
 	}
 
 }
