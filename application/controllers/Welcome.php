@@ -22,7 +22,6 @@ class Welcome extends Application
             $this->data['pagebody'] = 'homepage';
 
             $tasks = $this->tasks->all();
-
             $count = 0;
             foreach($tasks as $task)
             {
@@ -31,9 +30,21 @@ class Welcome extends Application
                     $count++;
                 }
             }
-
             $this->data['remaining_tasks'] = $count;
 
+            $count = 0;
+            foreach(array_reverse($tasks) as $task)
+            {
+                $task->priority = $this->priorities->get($task->priority)->name;
+                $display_tasks[] = (array) $task;
+                $count++;
+                if ($count >= 5)
+                {
+                    break;
+                }
+            }
+            $this->data['display_tasks'] = $display_tasks;
+            
             $this->render();
 	}
 
