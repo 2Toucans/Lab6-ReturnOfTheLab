@@ -17,7 +17,14 @@
             </div>           
             <div id="content">
                 <h1>{pagetitle}</h1>
-                {content}
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        {leftside}
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        {rightside}
+                    </div>
+                </div>
             </div>
             <div id="footer" class="span12">
                 Copyright &copy; 2017,  <a href="mailto:someone@somewhere.com">Me</a>.
