@@ -1,12 +1,17 @@
 <?php
 
-class Mtce extends Application {
-
+class Mtce extends Application
+{
+    private $items_per_page = 10;
     public function index()
     {
-        $this->data['pagetitle'] = 'TODO List Maintenance';
-        $tasks = $this->tasks->all(); // get all the tasks
-
+        $this->page(1);
+    }
+        
+    private function show_page($tasks)
+    {
+        $role = $this->session->userdata('userrole');
+        $this->data['pagetitle'] = 'TODO List Maintenance ('. $role . ')';
         // substitute the status name
         foreach ($tasks as $task)
             if (!empty($task->status))
@@ -22,5 +27,34 @@ class Mtce extends Application {
         $this->data['pagebody'] = 'itemlist';
         $this->render();
     }
+    
+    function page($num = 1)
+    {
+        $records = $this->tasks->all(); // get all the tasks
+        $tasks = array(); // start with an empty extract
 
+        // use a foreach loop, because the record indices may not be sequential
+        $index = 0; // where are we in the tasks list
+        $count = 0; // how many items have we added to the extract
+        $start = ($num - 1) * $this->items_per_page;
+        foreach($records as $task) {
+            if ($index++ >= $start) {
+                $tasks[] = $task;
+                $count++;
+            }
+            if ($count >= $this->items_per_page) break;
+        }
+        $this->data['pagination'] = $this->pagenav($num);
+        $this->show_page($tasks);
+    }
+    private function pagenav($num) {
+        $lastpage = ceil($this->tasks->size() / $this->items_per_page);
+        $parms = array(
+            'first' => 1,
+            'previous' => (max($num-1,1)),
+            'next' => min($num+1,$lastpage),
+            'last' => $lastpage
+        );
+        return $this->parser->parse('itemnav',$parms,true);
+    }
 }
