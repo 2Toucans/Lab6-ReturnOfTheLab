@@ -42,6 +42,17 @@ class Mtce extends Application {
             }
             if ($count >= $this->items_per_page) break;
         }
+        $this->data['pagination'] = $this->pagenav($num);
         $this->show_page($tasks);
+    }
+    private function pagenav($num) {
+        $lastpage = ceil($this->tasks->size() / $this->items_per_page);
+        $parms = array(
+            'first' => 1,
+            'previous' => (max($num-1,1)),
+            'next' => min($num+1,$lastpage),
+            'last' => $lastpage
+        );
+        return $this->parser->parse('itemnav',$parms,true);
     }
 }
