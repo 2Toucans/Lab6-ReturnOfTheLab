@@ -60,6 +60,7 @@ $autoload['packages'] = array();
 */
 $autoload['libraries'] = array('parser', 'database');
 $autoload['libraries'] = array('parser', 'database', 'parsedown');
+$autoload['libraries'] = array('parser', 'database', 'parsedown','session');
 
 /*
 | -------------------------------------------------------------------
