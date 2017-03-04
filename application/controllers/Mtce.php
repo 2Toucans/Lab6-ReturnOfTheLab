@@ -1,6 +1,7 @@
 <?php
 
-class Mtce extends Application {
+class Mtce extends Application
+{
     private $items_per_page = 10;
     public function index()
     {
@@ -9,7 +10,8 @@ class Mtce extends Application {
         
     private function show_page($tasks)
     {
-        $this->data['pagetitle'] = 'TODO List Maintenance';
+        $role = $this->session->userdata('userrole');
+        $this->data['pagetitle'] = 'TODO List Maintenance ('. $role . ')';
         // substitute the status name
         foreach ($tasks as $task)
             if (!empty($task->status))
