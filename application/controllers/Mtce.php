@@ -66,4 +66,21 @@ class Mtce extends Application
         );
         return $this->parser->parse('itemnav',$parms,true);
     }
+    // Initiate adding a new task
+    public function add()
+    {
+        $task = $this->tasks->create();
+        $this->session->set_userdata('task', $task);
+        $this->showit();
+    }
+    
+        // initiate editing of a task
+    public function edit($id = null)
+    {
+        if ($id == null)
+            redirect('/mtce');
+        $task = $this->tasks->get($id);
+        $this->session->set_userdata('task', $task);
+        $this->showit();
+    }
 }
